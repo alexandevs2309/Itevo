@@ -4,6 +4,7 @@ import path from 'path'
 import mongoose from 'mongoose'
 import router from './router'
 import * as dotenv from 'dotenv'
+
 dotenv.config()
 
 // CONEXION A LA BASE DE DATOS
