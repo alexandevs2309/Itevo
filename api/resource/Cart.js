@@ -12,8 +12,10 @@ export default {
                     _id: cart.course.categorie._id,
                     title: cart.course.categorie.title,
                 },
-                price_soles: cart.course.price_soles,
+                price_dop: cart.course.price_dop,
                 price_usd: cart.course.price_usd,
+                price_mxn: cart.course.price_mxn,
+
             },
             type_discount: cart.type_discount,
             discount: cart.discount,

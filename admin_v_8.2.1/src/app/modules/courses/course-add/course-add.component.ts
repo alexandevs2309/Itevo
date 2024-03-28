@@ -20,7 +20,7 @@ export class CourseAddComponent {
   level:string = '';
   idioma:string= '';
   
-  user:any= "";
+  user:string= "";
 
   title:string = '';
   subtitle:string = '';
@@ -45,7 +45,6 @@ export class CourseAddComponent {
 
     this.CourseService.ConfigAll().subscribe((resp:any) =>{
 
-    console.log(resp);
     this.CATEGORIES = resp.categories;
     this.USERS = resp.users;
     })
@@ -132,32 +131,54 @@ export class CourseAddComponent {
     },100)
   }
 
- save() {
-    if (!this.title || !this.subtitle || !this.price_usd || !this.price_dop || !this.price_mxn || !this.categorie || !this.level || !this.idioma || !this.user || !this.descripcion || !this.FILE_IMAGEN || this.requirements.length == 0 || this.who_is_it_for.length == 0) {
-        this.toaster.error('TODOS LOS CAMPOS SON REQUERIDOS', 'VALIDACIONES');
-        return;
+
+save() {
+  if (!this.title || !this.subtitle || !this.price_usd || !this.price_dop || !this.price_mxn || !this.categorie || !this.level || !this.idioma || !this.descripcion || !this.FILE_IMAGEN || this.requirements.length == 0 || this.who_is_it_for.length == 0) {
+    this.toaster.error('TODOS LOS CAMPOS SON REQUERIDOS', 'VALIDACIONES');
+    return;
+  }
+
+  const instructorSeleccionado = this.USERS.find((user: { name: string; surname: string; }) => user.name + ' ' + user.surname === this.user);
+  const idInstructor = instructorSeleccionado ? instructorSeleccionado._id : null;
+
+  let formData = new FormData();
+  formData.append('title', this.title);
+  formData.append('subtitle', this.subtitle);
+  formData.append('price_usd', this.price_usd + "");
+  formData.append('price_dop', this.price_dop + "");
+  formData.append('price_mxn', this.price_mxn + "");
+  formData.append('categorie', this.categorie);
+  formData.append('level', this.level);
+  formData.append('idioma', this.idioma);
+  formData.append('user', idInstructor); // Usa idInstructor aquí
+  formData.append('description', this.descripcion);
+  formData.append('requirements', JSON.stringify(this.requirements));
+  formData.append('who_is_it_for', JSON.stringify(this.who_is_it_for));
+  formData.append('portada', this.FILE_IMAGEN);
+
+  this.CourseService.registerCourses(formData).subscribe((resp: any) => {
+    if (resp.message ==403) {
+      this.toaster.error('YA EXISTE UN USUARIO OCURSO CON ESTOS CAMPOS , INTENTA CON OTROS', 'ERROR');
+      return;
+    }else{
+      this.title = '';
+      this.subtitle = '';
+      this.price_usd = 0;
+      this.price_dop = 0;
+      this.price_mxn = 0;
+      this.categorie = '';
+      this.level = '';
+      this.idioma = '';
+      this.descripcion = '';
+      this.requirements = [];
+      this.who_is_it_for = [];
+      this.FILE_IMAGEN = '';
+      this.IMAGEN_PREVIZUALIZAR = '';
+      this.user = '';
+      
+      this.toaster.success('CURSO AGREGADO EXITOSAMENTE !! ', 'SUCCESS');
     }
-
-    let formData = new FormData();
-    formData.append('title', this.title);
-    formData.append('subtitle', this.subtitle);
-    formData.append('price_usd', this.price_usd + "");
-    formData.append('price_dop', this.price_dop + "");
-    formData.append('price_mxn', this.price_mxn + "");
-    formData.append('categorie', this.categorie);
-    formData.append('level', this.level);
-    formData.append('idioma', this.idioma);
-    formData.append('user', this.user);
-      console.log(this.user, "hola");
-    formData.append('description', this.descripcion);
-    formData.append('requirements', JSON.stringify(this.requirements));
-    formData.append('who_is_it_for', JSON.stringify(this.who_is_it_for));
-    formData.append('portada', this.FILE_IMAGEN);
-
-    this.CourseService.registerCourses(formData).subscribe((resp: any) => {
-        console.log(resp);
-        this.toaster.success('CURSO AGREGADO EXITOSAMENTE !! ', 'SUCCESS');
-    });
+  });
 }
 
 
