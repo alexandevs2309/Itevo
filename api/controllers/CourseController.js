@@ -4,11 +4,12 @@ import resource from "../resource";
 import fs from 'fs'
 import path from 'path'
 
-const TOKEN_VIMEO = "48f30f67cab88cff9c7383ffe74f9cd9";
-const CLIENT_ID_VIMEO = "9f3479857194c726c43951cad7f34400962c1a90";
-const CLIENT_SECRET_VIMEO = "mJHH/4JQmh6XDVpQgEk2pIHynFP0XlKNb9xTc11SJ1woGhg/+3ZOwQMRjbYvxMKpOcPqkkZE6pa98nWqNAE0bZDnvu0BoihAQ+4rZTA1cZgBKUrrTeXrZZDGMlXc/KZl";
+const TOKEN_VIMEO = "5827f586dba53144a29796b2a27508da";
+const CLIENT_ID_VIMEO = "82dafd610b34827b97ce98a2bbfd7270f5b536d2";
+const CLIENT_SECRET_VIMEO = "hw8JUJKOR+CyBgIGQYbXUIztIsa7X1fEVMxQUZG7osNShfupt2VnnTMvFma+1l+RFHFKhYA0Jnt9OFg8MW4zLHQ6JNCTvsoUmV/TeOLgKvo+KwcmrTLKu3uwmaCXkU3W";
 
 import { Vimeo } from '@vimeo/vimeo'
+import { error } from "console";
 
 const CLIENT_VIMEO = new Vimeo(CLIENT_ID_VIMEO,CLIENT_SECRET_VIMEO,TOKEN_VIMEO);
 
@@ -22,6 +23,7 @@ async function UploadVideoVimeo(PathFile, VideoMetaDato) {
                     message: 200,
                     value: url,
                 });
+                console.error(error)
             },
             // DEBE IR UNA FUNCION
             function (bytesUploaded, bytesTotal) {
@@ -286,9 +288,8 @@ export default {
                 // /videos/852927231
                 // ["","videos","852927231"]
                 vimeo_id_result = ARRAY_VALUES[2];
-                let Course = await models.Course.findByIdAndUpdate({_id: req.body._id},{
-                    vimeo_id: vimeo_id_result
-                })
+                let Course = await models.Course.findByIdAndUpdate(req.body._id, { vimeo_id: vimeo_id_result });
+
     
                 res.status(200).json({
                     message: 'LA PRUEBA FUE UN EXITO',

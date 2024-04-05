@@ -42,10 +42,24 @@ export class CoursesService {
   
   }
 
+  showCourse(course_id:string = ''){
+    let headers = new HttpHeaders({'token': this.authservice.token});
+    this.isLoadingSubject.next(true);     
+    let URL = URL_SERVICIOS+"/courses/show/"+course_id;
+    return this.http.get(URL, {headers: headers}).pipe
+    (finalize(() => this.isLoadingSubject.next(false)))
+  }
+
   registerCourses(data:any){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({ "token": this.authservice.token});
     let URL = URL_SERVICIOS+"/courses/register";
+    return this.http.post(URL, data, {headers: headers}).pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+  uploadVimeo(data:any){
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({ "token": this.authservice.token});
+    let URL = URL_SERVICIOS+"/courses/upload_vimeo";
     return this.http.post(URL, data, {headers: headers}).pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
@@ -63,4 +77,6 @@ export class CoursesService {
     return this.http.delete(URL, {headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false)));
   }
+
+
 }

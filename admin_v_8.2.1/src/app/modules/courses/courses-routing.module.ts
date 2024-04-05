@@ -5,12 +5,14 @@ import { CourseAddComponent } from './course-add/course-add.component';
 import { CourseEditComponent } from './course-edit/course-edit.component';
 import { CourseDeleteComponent } from './course-delete/course-delete.component';
 import { CoursesComponent } from './courses.component';
+import { SectionAddComponent } from './sections/section-add/section-add.component';
 
 const routes: Routes = [
   {
     path: '', component: CoursesComponent, children :[
       {path: 'registro', component: CourseAddComponent} , 
-      {path: 'editar', component: CourseEditComponent} ,
+      {path: 'editar/:id', component: CourseEditComponent} ,
+      {path: 'seccion/:id', component: SectionAddComponent} ,
       {path: 'lista', component: CourseListComponent} ,
       
       // {path: 'ver/:id', component: CourseListComponent} ,

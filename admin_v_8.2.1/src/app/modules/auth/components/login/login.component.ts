@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit, OnDestroy {
   // KeenThemes mock, change it to:
   defaultAuth: any = {
-    email: 'superadmin@admin.com',
+    email: 'alexanderadmin@admin.com',
     password: 'baspeka',
   };
   loginForm: FormGroup;
