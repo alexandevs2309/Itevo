@@ -11,55 +11,54 @@ import { Toast, ToastrService } from 'ngx-toastr';
 export class SectionAddComponent {
 
   isLoading$:any;
+
   title:any = '';
   course_id:any = '';
+
+  SECTIONS:any =[];
 
   constructor(
     public courseSectionService: CourseSectionService,
     public activateRoute:ActivatedRoute,
     public toaster: ToastrService
-    // public courseService: CourseService,
-    // public router: Router,
-    // public route: ActivatedRoute,
-    // public courseSectionService: CourseSectionService,
-    // public courseService: CourseService,
-    // public courseSectionService: CourseSectionService,
-    // public courseSectionService: CourseSectionService,
+  
   ){
     
   }
 
   ngOnInit(): void {
     this.isLoading$ = this.courseSectionService.isLoading$;
+    
     this.activateRoute.params.subscribe((resp:any) => {
       this.course_id = resp.id;
-    });
-  
+    })
+    
+    this.courseSectionService.listSections().subscribe((resp:any) => {
+      this.SECTIONS = resp.sections;
+    })
   }
 
   save(){
+    if(!this.title){
+      this.toaster.error(' ES NECESARO UN TITULO PARA REGISTRAR UNA SECCION', 'ERROR ⛔');
+      return;
+    }
+
     let data = {
       course: this.course_id,
       title: this.title,
-      // description: this.description,
-      // order: this.order,
-      // status: this.status,
-      // type: this.type,
-      // video_url: this.video_url,
-      // video_duration: this.video_duration,
-      // video_thumbnail: this.video_thumbnail,
-      // video_title: this.video_title,
+    
     }
     this.courseSectionService.registerSections(data).subscribe((resp:any) => {
-      if (!this.title) {
-        this.toaster.error('TITULO VACIO ,  ES NECESARIO UN TITULO !!', 'ERROR');
-      
-        return; 
-      }
-      console.log(resp);
-      // this.courseSectionService.getSections();
-      // this.courseSectionService.closeModal();
-      // this.courseSectionService.showSuccess();
+           console.log(resp);
+
+           if( resp.message == 403){
+            this.toaster.error('ESTA SECCIÓN YA EXISTE POR FAVOR ELIJE UNO DIFERENTE ! ⚠️')
+           }else{
+            this.title = '';
+            this.toaster.success('LA SECCION SE REGISTRO EXITOSAMENTE !!  ✅')
+           }
+     
     
     })
   }
