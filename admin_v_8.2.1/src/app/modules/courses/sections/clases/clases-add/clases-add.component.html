@@ -23,7 +23,7 @@
                     <!--end::Svg Icon-->
                     <!-- </span> -->
                     <!--end::Svg Icon-->
-                    <h2>Add New Section</h2>
+                    <h2>Add New Clases</h2>
                 </div>
                 <!--end::Card title-->
             </div>
@@ -41,21 +41,26 @@
                         </label>
                         <!--end::Label-->
                         <!--begin::Input-->
-                        <input type="text" class="form-control form-control-solid" [(ngModel)]="title" name="title">
+                        <input type="text" class="form-control form-control-solid" [(ngModel)]="title" name="title" />
                         <!--end::Input-->
+                    </div>
+                    <div class="col-12">
+                        <label class="fs-6 fw-bold form-label mt-3">
+                            <span class="required">Descripcion:</span>
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
+                                data-bs-original-title="Enter the contact's name." aria-label="Enter the contact's name."></i>
+                        </label>
+                        <ckeditor [data]="description" (change)="onChange($event)"></ckeditor>
                     </div>
 
                     <div class="col-8 py-3">
                         <button class="btn btn-primary" (click)="save()">Guardar</button>
                     </div>
-
                 </div>
             </div>
             <!--end::Card body-->
         </div>
     </div>
-
-
 
     <!-- listado de  secciones agregadas -->
     <div class="col-6">
@@ -63,10 +68,9 @@
             <!--begin::Header-->
             <div class="card-header border-0 pt-5">
                 <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bolder fs-3 mb-1">Secciones del curso</span>
-                    <span class="text-muted mt-1 fw-bold fs-7">Grupo de clases</span>
+                    <span class="card-label fw-bolder fs-3 mb-1">Clases de el curso</span>
+                    <span class="text-muted mt-1 fw-bold fs-7">Contenido Multimedia</span>
                 </h3>
-
             </div>
             <!--end::Header-->
             <!--begin::Body-->
@@ -90,70 +94,37 @@
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-
-                                    <ng-container *ngFor="let SECTION of SECTIONS">
+                                    <ng-container *ngFor="let CLASE of CLASES">
                                         <tr>
                                             <td>
-                                                <div class="symbol symbol-50px me-2">
-                                                    <span class="symbol-label bg-light-success">
-                                                        <!--begin::Svg Icon | path: icons/duotune/coding/cod002.svg-->
-                                                        <span class="svg-icon svg-icon-2x svg-icon-success">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none">
-                                                                <path opacity="0.3"
-                                                                    d="M18 22C19.7 22 21 20.7 21 19C21 18.5 20.9 18.1 20.7 17.7L15.3 6.30005C15.1 5.90005 15 5.5 15 5C15 3.3 16.3 2 18 2H6C4.3 2 3 3.3 3 5C3 5.5 3.1 5.90005 3.3 6.30005L8.7 17.7C8.9 18.1 9 18.5 9 19C9 20.7 7.7 22 6 22H18Z"
-                                                                    fill="currentColor"></path>
-                                                                <path d="M18 2C19.7 2 21 3.3 21 5H9C9 3.3 7.7 2 6 2H18Z"
-                                                                    fill="currentColor"></path>
-                                                                <path d="M9 19C9 20.7 7.7 22 6 22C4.3 22 3 20.7 3 19H9Z"
-                                                                    fill="currentColor"></path>
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </span>
-                                                </div>
+                                                <span class="symbol-label">
+                                                    <img src="assets/media/svg/brand-logos/vimeo.svg"
+                                                        class="h-50 align-self-center" alt="" />
+                                                </span>
                                             </td>
                                             <td>
                                                 <a href="#" class="text-dark fw-bolder text-hover-primary mb-1 fs-6">
-                                                    {{SECTION.title}}
+                                                    {{ CLASE.title }}
                                                 </a>
                                                 <!-- <span class="text-muted fw-bold d-block fs-7">Voice and video 
                                                     recorder</span>-->
                                             </td>
                                             <td class="">
-                                                <span class="text-muted fw-bold d-block fs-8">№ de Clase </span>
-                                                <span class="text-dark fw-bolder d-block fs-7">{{SECTION.num_clases ?
-                                                    SECTION.num_clases: 0}}</span>
+                                                <span class="text-muted fw-bold d-block fs-8">Duracion
+                                                </span>
+                                                <span class="text-dark fw-bolder d-block fs-7">{{
+                                                    CLASE.time_parse
+                                                    }}</span>
                                             </td>
                                             <td class="">
                                                 <span class="badge badge-light-success fs-7 fw-bolder"
-                                                    *ngIf="SECTION.state === 1">Active</span>
+                                                    *ngIf="CLASE.state === 1">Active</span>
                                                 <span class="badge badge-light-danger fs-7 fw-bolder"
-                                                    *ngIf="SECTION.state === 2">Inactive</span>
+                                                    *ngIf="CLASE.state === 2">Inactive</span>
                                             </td>
                                             <td class="">
-                                                <div style="display: flex;">
-
-                                                    <a href="#" onclick="return false;"
-                                                        [routerLink]="['/courses/lista/seccion/clases/', SECTION._id]"
-                                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                     
-                                                        <!--begin::Svg Icon | path: /var/www/preview.keenthemes.com/keenthemes/metronic/docs/core/html/src/media/icons/duotune/abstract/abs027.svg-->
-                                                        <span class="svg-icon svg-icon-3"><svg
-                                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path opacity="0.3"
-                                                                    d="M21.25 18.525L13.05 21.825C12.35 22.125 11.65 22.125 10.95 21.825L2.75 18.525C1.75 18.125 1.75 16.725 2.75 16.325L4.04999 15.825L10.25 18.325C10.85 18.525 11.45 18.625 12.05 18.625C12.65 18.625 13.25 18.525 13.85 18.325L20.05 15.825L21.35 16.325C22.35 16.725 22.35 18.125 21.25 18.525ZM13.05 16.425L21.25 13.125C22.25 12.725 22.25 11.325 21.25 10.925L13.05 7.62502C12.35 7.32502 11.65 7.32502 10.95 7.62502L2.75 10.925C1.75 11.325 1.75 12.725 2.75 13.125L10.95 16.425C11.65 16.725 12.45 16.725 13.05 16.425Z"
-                                                                    fill="currentColor" />
-                                                                <path
-                                                                    d="M11.05 11.025L2.84998 7.725C1.84998 7.325 1.84998 5.925 2.84998 5.525L11.05 2.225C11.75 1.925 12.45 1.925 13.15 2.225L21.35 5.525C22.35 5.925 22.35 7.325 21.35 7.725L13.05 11.025C12.45 11.325 11.65 11.325 11.05 11.025Z"
-                                                                    fill="currentColor" />
-                                                            </svg>
-                                                        </span>
-                                                        <!--end::Svg Icon-->
-                                                    </a>
-
-                                                    <a href="#" onclick="return false" (click)="editSection(SECTION)"
+                                                <div style="display: flex">
+                                                    <a href="#" onclick="return false" (click)="editClase(CLASE)"
                                                         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                         <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                                         <span class="svg-icon svg-icon-3">
@@ -170,7 +141,7 @@
                                                         <!--end::Svg Icon-->
                                                     </a>
 
-                                                    <a href="#" onclick="return false" (click)="deleteSection(SECTION)"
+                                                    <a href="#" onclick="return false" (click)="deleteClase(CLASE)"
                                                         class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                                         <span class="svg-icon svg-icon-3">
@@ -191,13 +162,8 @@
                                                     </a>
                                                 </div>
                                             </td>
-
                                         </tr>
                                     </ng-container>
-
-
-
-
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
@@ -205,7 +171,6 @@
                         <!--end::Table-->
                     </div>
                     <!--end::Tap pane-->
-
                 </div>
             </div>
             <!--end::Body-->

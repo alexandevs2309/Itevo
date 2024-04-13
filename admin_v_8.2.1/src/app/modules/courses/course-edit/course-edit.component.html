@@ -1,4 +1,4 @@
-<span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async" ></span>
+<span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
 <div class="card card-flush h-lg-100" id="kt_contacts_main">
     <!--begin::Card header-->
     <div class="card-header pt-7" id="kt_chat_contacts_header">
@@ -73,7 +73,8 @@
                             data-bs-original-title="Enter the contact's company name (optional)."
                             aria-label="Enter the contact's company name (optional)."></i>
                     </label>
-                    <input type="number" class="form-control form-control-solid" [(ngModel)]="price_usd" name="price_usd">
+                    <input type="number" class="form-control form-control-solid" [(ngModel)]="price_usd"
+                        name="price_usd">
 
                 </div>
 
@@ -84,7 +85,8 @@
                             data-bs-original-title="Enter the contact's company name (optional)."
                             aria-label="Enter the contact's company name (optional)."></i>
                     </label>
-                    <input type="number" class="form-control form-control-solid" [(ngModel)]="price_dop" name="price_dop" >
+                    <input type="number" class="form-control form-control-solid" [(ngModel)]="price_dop"
+                        name="price_dop">
                 </div>
 
                 <div class="col-3">
@@ -94,23 +96,22 @@
                             data-bs-original-title="Enter the contact's company name (optional)."
                             aria-label="Enter the contact's company name (optional)."></i>
                     </label>
-                    <input type="number" class="form-control form-control-solid" [(ngModel)]="price_mxn" name="price_mxn">
+                    <input type="number" class="form-control form-control-solid" [(ngModel)]="price_mxn"
+                        name="price_mxn">
                 </div>
 
                 <div class="col-3">
                     <label class="fs-6 fw-bold form-label mt-3">
                         <span>Categoria:</span>
                     </label>
-                    <select class="form-control form-select-solid fw-bolder"
-                    name="categorie"
-                    [(ngModel)]="categorie"
-                    placeholder="Selec. Categoria">
+                    <select class="form-control form-select-solid fw-bolder" name="categorie" [(ngModel)]="categorie"
+                        placeholder="Selec. Categoria">
 
                         <option value="">Seleciona Categoria</option>
-                    <ng-container *ngFor="let CATEGORIE of CATEGORIES">
-                        <option [value]="CATEGORIE._id">{{CATEGORIE.title}}</option>
-                    </ng-container>
-                    
+                        <ng-container *ngFor="let CATEGORIE of CATEGORIES">
+                            <option [value]="CATEGORIE._id">{{CATEGORIE.title}}</option>
+                        </ng-container>
+
                     </select>
                 </div>
 
@@ -118,17 +119,15 @@
                     <label class="fs-6 fw-bold form-label mt-3">
                         <span>Status:</span>
                     </label>
-                    <select class="form-control form-select-solid fw-bolder"
-                    name="state"
-                    [(ngModel)]="state"
-                    placeholder="Selec. Status">
+                    <select class="form-control form-select-solid fw-bolder" name="state" [(ngModel)]="state"
+                        placeholder="Selec. Status">
 
                         <option value="1">Demo</option>
                         <option value="2">Published</option>
-                    
+
                     </select>
                 </div>
-state
+                state
 
             </div>
 
@@ -142,9 +141,7 @@ state
                             data-bs-original-title="Enter the contact's company name (optional)."
                             aria-label="Enter the contact's company name (optional)."></i>
                     </label>
-                    <select class="form-control form-select-solid fw-bolder" 
-                        name="idioma"
-                        [(ngModel)]="idioma"
+                    <select class="form-control form-select-solid fw-bolder" name="idioma" [(ngModel)]="idioma"
                         placeholder="Selec. Idioma">
                         <option value="Selec">Selecionar.</option>
                         <option value="Ingles">Ingles</option>
@@ -162,11 +159,9 @@ state
                             data-bs-original-title="Enter the contact's company name (optional)."
                             aria-label="Enter the contact's company name (optional)."></i>
                     </label>
-                    <select class="form-control form-select-solid fw-bolder" 
-                        name="level"
-                        [(ngModel)]="level"
+                    <select class="form-control form-select-solid fw-bolder" name="level" [(ngModel)]="level"
                         placeholder="Selec. Nivel">
-                        
+
                         <option value="Selec">Selecionar.</option>
                         <option value="Basico">Basico</option>
                         <option value="Intermedio">Intermedio</option>
@@ -182,18 +177,15 @@ state
                             data-bs-original-title="Enter the contact's company name (optional)."
                             aria-label="Enter the contact's company name (optional)."></i>
                     </label>
-                    <select 
-                        class="form-control form-select-solid fw-bolder" 
-                        name="instructor"
-                        [(ngModel)]="user"
-                        placeholder="Selec. Instructor"
-                            >
-                        
-                        <option value="">Seleciona Instructor <option>
-                        <ng-container *ngFor="let USER of USERS">
-                            <option [value]="USER._id"> {{USER.name + ' ' + USER.surname}} </option>
+                    <select class="form-control form-select-solid fw-bolder" name="instructor" [(ngModel)]="user"
+                        placeholder="Selec. Instructor">
+
+                        <option value="">Seleciona Instructor
+                        <option>
+                            <ng-container *ngFor="let USER of USERS">
+                        <option [value]="USER._id"> {{USER.name + ' ' + USER.surname}} </option>
                         </ng-container>
-                    
+
                     </select>
                 </div>
 
@@ -206,8 +198,9 @@ state
                     <div class="col-lg-6 col-md-6 col-sm-12 my-2">
                         <label class="form-label">Sube tu imagen: *</label>
                         <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                            <input type="file" class="custom-file-input" id="customFile"
+                                accept=".jpeg, .bmp, .jpg, .png, .gif, .webp" (change)="processFile($event)">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
                     </div>
                 </div>
@@ -222,113 +215,120 @@ state
                     <label class="fs-6 fw-bold form-label mt-3">
                         <span class="required">Descripcion:</span>
                         <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
-                            data-bs-original-title="Enter the contact's name." aria-label="Enter the contact's name."></i>
+                            data-bs-original-title="Enter the contact's name."
+                            aria-label="Enter the contact's name."></i>
                     </label>
                     <ckeditor [data]="description" (change)="onChange($event)"></ckeditor>
                 </div>
             </div>
 
-                <div class="row mb-7 fv-plugins-icon-container">
-                    <div class="col-5 ">
-                        <div class="">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold form-label mt-3">
-                                <span class="required">Requerimientos:</span>
-                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
-                                    data-bs-original-title="Enter the contact's name." aria-label="Enter the contact's name."></i>
-                            </label>
-                        </div>
-                        <div class="d-flex">
-                            <input type="text" class="form-control form-control-solid" name="requirements" [(ngModel)]="requirements_text" value="">
-                            <button class="btn btn-primary mx-2" (click)="addRequirements()"> + </button>
-                        </div>
-                
+            <div class="row mb-7 fv-plugins-icon-container">
+                <div class="col-5 ">
+                    <div class="">
+                        <!--begin::Label-->
+                        <label class="fs-6 fw-bold form-label mt-3">
+                            <span class="required">Requerimientos:</span>
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
+                                data-bs-original-title="Enter the contact's name."
+                                aria-label="Enter the contact's name."></i>
+                        </label>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" class="form-control form-control-solid" name="requirements"
+                            [(ngModel)]="requirements_text" value="">
+                        <button class="btn btn-primary mx-2" (click)="addRequirements()"> + </button>
                     </div>
 
-                    <div class="col-6">
-                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                            <thead>
-                                <th>Requerimientos:</th>
-                                <th>Accion</th>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let requirement of requirements ;let i = index">
-                                    
-                                    <tr>
-                                        <td>
-                                           {{requirement}}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger mx-2" (click)="deleteRequirements(i)" > x </button>
-                                        </td>
-                                    </tr>
-                                </ng-container>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
 
-                <div class="row mb-7 fv-plugins-icon-container">
-                    <div class="col-5 ">
-                        <div class="">
-                            <!--begin::Label-->
-                            <label class="fs-6 fw-bold form-label mt-3">
-                                <span class="required">¿ A Quien va dirijido este curso ?:</span>
-                                <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
-                                    data-bs-original-title="Enter the contact's name." aria-label="Enter the contact's name."></i>
-                            </label>
-                        </div>
-                        <div class="d-flex">
-                            <input type="text" class="form-control form-control-solid" name="who_is_it_for" [(ngModel)]="who_is_for_text" value="">
-                            <button class="btn btn-primary mx-2" (click)="addWhois()" > +  </button>
-                        </div>
-                
+                <div class="col-6">
+                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                        <thead>
+                            <th>Requerimientos:</th>
+                            <th>Accion</th>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let requirement of requirements ;let i = index">
+
+                                <tr>
+                                    <td>
+                                        {{requirement}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger mx-2" (click)="deleteRequirements(i)"> x
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row mb-7 fv-plugins-icon-container">
+                <div class="col-5 ">
+                    <div class="">
+                        <!--begin::Label-->
+                        <label class="fs-6 fw-bold form-label mt-3">
+                            <span class="required">¿ A Quien va dirijido este curso ?:</span>
+                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
+                                data-bs-original-title="Enter the contact's name."
+                                aria-label="Enter the contact's name."></i>
+                        </label>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" class="form-control form-control-solid" name="who_is_it_for"
+                            [(ngModel)]="who_is_for_text" value="">
+                        <button class="btn btn-primary mx-2" (click)="addWhois()"> + </button>
                     </div>
 
-                    <div class="col-6">
-                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
-                            <thead>
-                                <th>¿ A Que publico esta  enfocado ?:</th>
-                                <th>Accion</th>
-                            </thead>
-                            <tbody>
-                                <ng-container *ngFor="let who_is_it of who_is_it_for ;let i = index">
-                                    
-                                    <tr>
-                                        <td>
-                                           {{who_is_it}}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger mx-2" (click)="deleteWhois(i)" > x </button>
-                                        </td>
-                                    </tr>
-                                </ng-container>
-                                
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
 
+                <div class="col-6">
+                    <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                        <thead>
+                            <th>¿ A Que publico esta enfocado ?:</th>
+                            <th>Accion</th>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let who_is_it of who_is_it_for ;let i = index">
 
-                
+                                <tr>
+                                    <td>
+                                        {{who_is_it}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger mx-2" (click)="deleteWhois(i)"> x </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+
             <div class="row mb-7 fv-plugins-icon-container">
                 <div class="col-5">
                     <div class="col-lg-6 col-md-6 col-sm-12 my-2">
                         <label class="form-label">Sube tu video previwe: *</label>
                         <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile"  accept=" .mp4, .wmv,  .mov"  (change)="processVideo($event)">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                            <input type="file" class="custom-file-input" id="customFile" accept=" .mp4, .wmv,  .mov"
+                                (change)="processVideo($event)">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
                         </div>
 
-                    <div *ngIf="link_video_vimeo" class="py-5">
-                    <iframe [src]="urlVideo()" frameborder="0"></iframe>
-                    </div>
+                        <div *ngIf="link_video_vimeo" class="py-5">
+                            <iframe [src]="urlVideo()" frameborder="0"></iframe>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-6">
                     <button class="btn btn-sm btn-primary" (click)="uploadVimeo()" *ngIf="loadVideo"> + </button>
-                    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="!loadVideo" ></span>
+                    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="!loadVideo"></span>
 
                 </div>
             </div>

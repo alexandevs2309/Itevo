@@ -1,1 +1,61 @@
-<p>section-edit works!</p>
+<!--begin::Modal content-->
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="kt_modal_add_user_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bolder">Edit Seccion: {{ SECTION.title }}</h2>
+        <!--end::Modal title-->
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" (click)="modal.close()">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                        fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                        fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+        <div class="row">
+            <div class="col-12">
+                <!--begin::Label-->
+                <label class="fs-6 fw-bold form-label mt-3">
+                    <span class="required">Titulo</span>
+                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
+                        data-bs-original-title="Enter the contact's name." aria-label="Enter the contact's name."></i>
+                </label>
+                <!--end::Label-->
+                <!--begin::Input-->
+                <input type="text" class="form-control form-control-solid" [(ngModel)]="title" name="title">
+                <!--end::Input-->
+            </div>
+            <div class="col-6 py-3">
+                <label class="fs-6 fw-bold form-label mt-3">
+                    <span class="required">State :</span>
+                    <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
+                        data-bs-original-title="Enter the contact's name." aria-label="Enter the contact's name."></i>
+                </label>
+                <select class="form-control form-select-solid fw-bolder" name="state" [(ngModel)]="state"
+                    placeholder="Selec. State">
+                    <option value="1">Active</option>
+                    <option value="2">Inactive</option>
+                </select>
+            </div>
+
+            <div class="col-8 py-3">
+                <button class="btn btn-primary" (click)="save()">Guardar</button>
+            </div>
+
+        </div>
+
+    </div>
+    <!--end::Modal body-->
+</div>
+<!--end::Modal content-->

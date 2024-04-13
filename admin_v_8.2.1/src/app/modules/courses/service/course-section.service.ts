@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, finalize } from 'rxjs';
+import { Observable, BehaviorSubject, finalize, catchError } from 'rxjs';
 import { URL_SERVICIOS } from 'src/app/config/config';
 import { AuthService } from '../../auth';
 
@@ -11,7 +11,7 @@ export class CourseSectionService {
 
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
-  
+
   constructor(
     private http: HttpClient,
     public authservice: AuthService,
@@ -21,35 +21,39 @@ export class CourseSectionService {
   }
 
 
-  listSections(){
+  listSections(course_id: string) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({ "token": this.authservice.token});
-   
-    let URL = URL_SERVICIOS+"/course_section/list"
-    return this.http.get( URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false)));
-  
+    let headers = new HttpHeaders({ "token": this.authservice.token });
+
+    let URL = URL_SERVICIOS + "/course_section/list"+(course_id ? "?course_id="+course_id : '');
+    return this.http.get(URL, {
+      headers: headers,
+      params: { course_id: course_id }  // Envía course_id como un parámetro de consulta
+    }).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
   }
 
-  registerSections(data:any){
+
+  registerSections(data: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({ "token": this.authservice.token});
-    let URL = URL_SERVICIOS+"/course_section/register";
-    return this.http.post(URL, data, {headers: headers}).pipe(finalize(() => this.isLoadingSubject.next(false)));
+    let headers = new HttpHeaders({ "token": this.authservice.token });
+    let URL = URL_SERVICIOS + "/course_section/register";
+    return this.http.post(URL, data, { headers: headers }).pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  updateSections(data:any){
+  updateSections(data: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({ "token": this.authservice.token});
-    let URL = URL_SERVICIOS+"/course_section/update";
-    return this.http.post(URL, data, {headers: headers}).pipe(finalize(() => this.isLoadingSubject.next(false)));
+    let headers = new HttpHeaders({ "token": this.authservice.token });
+    let URL = URL_SERVICIOS + "/course_section/update";
+    return this.http.post(URL, data, { headers: headers }).pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  removeCategorie(categorie_id:any){
+  removeSection(section_id: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({ "token": this.authservice.token});
-    let URL = URL_SERVICIOS+"/course_section/remove/"+categorie_id;
-    return this.http.delete(URL, {headers: headers}).pipe(
+    let headers = new HttpHeaders({ "token": this.authservice.token });
+    let URL = URL_SERVICIOS + "/course_section/remove/" + section_id;
+    return this.http.delete(URL, { headers: headers }).pipe(
       finalize(() => this.isLoadingSubject.next(false)));
   }
 }

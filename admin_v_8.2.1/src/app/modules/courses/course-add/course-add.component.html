@@ -34,18 +34,18 @@
             <!--TITULOS Y SUB-TITULOS -->
             <div class="row mb-7 fv-plugins-icon-container">
                 <div class="col-7">
-                    <!--begin::Label-->
+                   
                     <label class="fs-6 fw-bold form-label mt-3">
                         <span class="required">Titulo</span>
                         <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title=""
                             data-bs-original-title="Enter the contact's name."
                             aria-label="Enter the contact's name."></i>
                     </label>
-                    <!--end::Label-->
-                    <!--begin::Input-->
+                   
                     <input type="text" class="form-control form-control-solid" [(ngModel)]="title" name="title">
-                    <!--end::Input-->
-
+                </div>
+                <div class="col-8">
+                    <button class="btn btn-primary" (click)="save()">Guardar</button>
                 </div>
                 <div class="col-5">
                     <!--begin::Label-->

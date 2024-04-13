@@ -2,9 +2,9 @@ import models from "../models";
 import resource from "../resource";
 import getVideoDurationInSeconds from 'get-video-duration';
 
-const TOKEN_VIMEO = "48f30f67cab88cff9c7383ffe74f9cd9";
-const CLIENT_ID_VIMEO = "9f3479857194c726c43951cad7f34400962c1a90";
-const CLIENT_SECRET_VIMEO = "mJHH/4JQmh6XDVpQgEk2pIHynFP0XlKNb9xTc11SJ1woGhg/+3ZOwQMRjbYvxMKpOcPqkkZE6pa98nWqNAE0bZDnvu0BoihAQ+4rZTA1cZgBKUrrTeXrZZDGMlXc/KZl";
+const TOKEN_VIMEO = "f6135ab546003001fdbb84e1e5bc5c32";
+const CLIENT_ID_VIMEO = "987f27e0bec42d7c9f633d392f2c8a4e8c36568e";
+const CLIENT_SECRET_VIMEO = "fJsW2kGxKiL3w45n2U16nM583C9/jgzozHhqQGsudx3rfVDNiyoCBQQpgqIa//Zr8SIE9I2poKDkKZRQrgIxPP/9A/XD+iw1aEwY0UYmn4WpEy3oVOm7ZvNiHYp2EI1f";
 
 import { Vimeo } from '@vimeo/vimeo'
 
