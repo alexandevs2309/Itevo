@@ -28,6 +28,17 @@
                         <input type="text" data-kt-user-table-filter="search" (keyup.enter)="listCourse()"
                             [(ngModel)]="search" class="form-control form-control-solid w-250px ps-14"
                             placeholder="Search Course" />
+
+                        <select class="form-select form-check-solid fw-bolder" [(ngModel)]="categorie"
+                            (change)="listCourse()">
+                            <option value="">todo</option>
+                            <ng-container *ngFor="let CATEGORIE of CATEGORIES">
+                                <option [value]="CATEGORIE._id">{{CATEGORIE.title}}</option>
+                            </ng-container>
+
+                        </select>
+
+
                     </div>
                     <!--end::Search-->
                 </div>
@@ -469,7 +480,8 @@
                                             </span>
                                             <!--end::Svg Icon-->
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+
+                                        <a href="#" onclick="return false;" (click)="deleteCourse(COURSE)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                             <span class="svg-icon svg-icon-3">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"

@@ -63,6 +63,11 @@ const Routing: Routes = [
     path: 'courses', loadChildren: () => import('../modules/courses/courses.module').then((m) => m.CoursesModule),
   },
 
+  
+  {
+    path: 'cupon', loadChildren: () => import('../modules/cupones/cupones.module').then((m) => m.CuponesModule),
+  },
+
   {
     path: '',
     redirectTo: '/dashboard',

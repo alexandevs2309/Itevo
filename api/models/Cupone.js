@@ -2,7 +2,7 @@ import mongoose, {Schema} from "mongoose";
 
 const CuponeSchema = new Schema({
     code: {type: String,maxlength: 50,required:true},
-    type_discount: {type:Number,required:true,default: 1}, //por porcentaje es 1 y 2 seria por monto
+    type_discount: {type:Number,required:true,default: 1}, // 1 es por porcentaje  y 2 por monto
     discount:{type: Number,required:true},
     type_count:{type:Number,required:true,default:1},// ilimitado es 1 y 2 es limitado
     num_use:{type: Number,required:true},
