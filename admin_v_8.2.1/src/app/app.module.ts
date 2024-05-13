@@ -18,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CKEditorModule } from 'ckeditor4-angular';
 // #fake-end#
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -55,6 +56,7 @@ function appInitializer(authService: AuthService) {
     NgbPaginationModule,
   ],
   providers: [
+    DatePipe,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

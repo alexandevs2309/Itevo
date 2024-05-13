@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { CuponesService } from '../service/cupones.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { DiscountService } from '../service/discount.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-cupone-edit',
-  templateUrl: './cupone-edit.component.html',
-  styleUrls: ['./cupone-edit.component.scss']
+  selector: 'app-discount-edit',
+  templateUrl: './discount-edit.component.html',
+  styleUrls: ['./discount-edit.component.scss']
 })
-export class CuponeEditComponent {
-  code: any = null;
+export class DiscountEditComponent {
   type_discount: number = 1;
-  type_cupon: number = 1;
-  num_use: number = 0;
+  type_segment: number = 1;
+  type_campaign = 1;
+  start_date: any = null;
+  end_date: any = null;
   discount: number = 0;
-  type_count: number = 1;
   COURSES: any = [];
   COURSE_SELECTED: any = [];
   CATEGORIES: any = []
@@ -23,43 +24,40 @@ export class CuponeEditComponent {
   course_id: any = null;
   categorie_id: any = null;
   isLoading$: any;
-
-  CUPON_SELECTED: any = null;
-  CUPON_ID: any;
-
-  constructor
-    (public cuponeService: CuponesService,
+  DISCOUNT_ID: any = null;
+  DISCOUNT_SELECTED: any = null;
+  constructor (
+      public discountService: DiscountService,
       public toaster: ToastrService,
-      public activedRouter: ActivatedRoute,
+      public datePipe: DatePipe,
+      public activatedRouter: ActivatedRoute ,
     ) { }
 
   ngOnInit(): void {
-    this.isLoading$ = this.cuponeService.isLoadingSubject.asObservable();
-    this.activedRouter.params.subscribe((resp: any) => {
-      console.log(resp);
-      this.CUPON_ID = resp.id;
+    this.isLoading$ = this.discountService.isLoadingSubject.asObservable();
+    this.activatedRouter.params.subscribe((resp: any) => {
+      this.DISCOUNT_ID = resp.id;
     })
-    this.cuponeService.ConfigAll().subscribe((resp: any) => {
+    this.discountService.ConfigAll().subscribe((resp: any) => {
       console.log(resp);
       this.COURSES = resp.courses;
       this.CATEGORIES = resp.categories;
 
-      // this.code = resp.code;
-      // this.discount = resp.discount;
-      // this.num_use = resp.num_use;
-      // this.type_discount = resp.type_discount;
-      this.cuponeService.showCupone(this.CUPON_ID).subscribe((resp: any) => {
+      this.discountService.showDiscount(this.DISCOUNT_ID).subscribe((resp: any) => {
         console.log(resp);
-        this.CUPON_SELECTED = resp.cupon;
-        this.code = this.CUPON_SELECTED.code;
-        this.discount = this.CUPON_SELECTED.discount;
-        this.num_use = this.CUPON_SELECTED.num_use;
-        this.type_discount = this.CUPON_SELECTED.type_discount;
-        this.type_count = this.CUPON_SELECTED.type_count;
-        this.type_cupon = this.CUPON_SELECTED.type_cupon;
-  
-        if (this.type_cupon == 1) {
-          this.CUPON_SELECTED.courses.forEach((element: any) => {
+
+        this.DISCOUNT_SELECTED = resp.discount;
+
+        this.discount = this.DISCOUNT_SELECTED.discount;
+        this.type_discount = this.DISCOUNT_SELECTED.type_discount;
+        this.type_segment = this.DISCOUNT_SELECTED.type_segment;
+        this.type_campaign = this.DISCOUNT_SELECTED.type_campaign;
+
+        this.start_date = this.getParseDate(this.DISCOUNT_SELECTED.start_date);
+        this.end_date = this.getParseDate(this.DISCOUNT_SELECTED.end_date);
+
+        if (this.type_segment == 1) {
+          this.DISCOUNT_SELECTED.courses.forEach((element: any) => {
             let COURSE_S = this.COURSE_SELECTED.find((item: any) => item._id == element._id);
             if (!COURSE_S) {
               let COURSE_T = this.COURSES.find((item: any) => item._id == element._id);
@@ -67,86 +65,84 @@ export class CuponeEditComponent {
             }
           });
         } else {
-          this.CUPON_SELECTED.categories.forEach((element: any) => {
+          this.DISCOUNT_SELECTED.categories.forEach((element: any) => {
             let CATEGORIE_S = this.CATEGORIE_SELECTED.find((item: any) => item._id == element._id);
             if (!CATEGORIE_S) {
               let CATEGORIE_T = this.CATEGORIES.find((item: any) => item._id == element._id);
               this.CATEGORIE_SELECTED.push(CATEGORIE_T);
             }
-  
+
           });
         }
+
       })
+
+
     })
-
   }
-
-
-
+  getParseDate(date: any) {
+    return this.datePipe.transform(date, 'yyyy-MM-dd' , 'UTC');
+  }
   save() {
-    if (!this.code || !this.discount) {
-      this.toaster.error('TODOS LOS CAMPOS DEBEN SER COMPLETADOS');
+    if (!this.discount || !this.start_date || !this.end_date) {
+      this.toaster.warning('TODOS LOS CAMPOS DEBEN SER COMPLETADOS');
       return;
     }
 
-    if (this.type_count == 2 && this.num_use == 0) {
-      this.toaster.error('NESECITAS LLENAR UN NUMERO DE USO LIMITE ');
+
+    if (this.type_segment == 1 && this.COURSE_SELECTED.length == 0) {
+      this.toaster.warning('NESECITAS SELECIONAR UN CURSO ');
       return;
     }
 
-    if (this.type_cupon == 1 && this.COURSE_SELECTED.length == 0) {
-      this.toaster.error('NESECITAS SELECIONAR UN CURSO ');
-      return;
-    }
-
-    if (this.type_cupon == 2 && this.CATEGORIE_SELECTED.length == 0) {
-      this.toaster.error('NESECITAS SELECIONAR UNA CATEGORIA ');
+    if (this.type_segment == 2 && this.CATEGORIE_SELECTED.length == 0) {
+      this.toaster.warning('NESECITAS SELECIONAR UNA CATEGORIA ');
       return;
     }
 
     let courses_selected: any = [];
     let categorie_selected: any = [];
+    let courses_s: any = [];
+    let categories_s: any = [];
 
     this.COURSE_SELECTED.forEach((element: any) => {
       courses_selected.push({
         _id: element._id,
 
       })
+      courses_s.push(element._id)
     });
 
     this.CATEGORIE_SELECTED.forEach((element: any) => {
       categorie_selected.push({
         _id: element._id,
       })
+      categories_s.push(element._id)
     })
 
     let data = {
-      code: this.code,
       discount: this.discount,
       type_discount: this.type_discount,
-      type_count: this.type_count,
-      num_use: this.num_use,
-      type_cupon: this.type_cupon,
       courses: courses_selected,
       categories: categorie_selected,
-      _id: this.CUPON_ID,
+      courses_s,
+      categories_s,
+      start_date: this.start_date,
+      end_date: this.end_date,
+      start_date_num: new Date(this.start_date).getTime(),
+      end_date_num: new Date(this.end_date).getTime(),
+      type_campaign: this.type_campaign,
+      type_segment: this.type_segment,
+      _id: this.DISCOUNT_ID,
     }
 
-    this.cuponeService.updatCupone(data).subscribe((resp: any) => {
+    this.discountService.updateDiscount(data).subscribe((resp: any) => {
       console.log(resp)
       if (resp.message == 403) {
         this.toaster.error(resp.message_text, 'Error');
       } else {
-        this.toaster.success('Cupón actualizado con éxito', 'Exito');
-        // this.code = null;
-        // this.discount = 0;
-        // this.type_discount = 1;
-        // this.type_count = 1;
-        // this.num_use = 0;
-        // this.type_cupon = 1;
-        // this.COURSE_SELECTED = [];
-        // this.CATEGORIE_SELECTED = [];
-
+        this.toaster.success('Cupón editado con éxito', 'Exito');
+       
       }
     })
 
@@ -154,15 +150,17 @@ export class CuponeEditComponent {
   }
 
 
-  selectedTipeDiscount(val: number) {
+  selectedTypeDiscount(val: number) {
     this.type_discount = val;
   }
 
-  selectedTypeCount(val: number) {
-    this.type_count = val;
+  selectedTypeCampaign(val: number) {
+    this.type_campaign = val;
   }
+
+
   selectedTypeCupon(val: number) {
-    this.type_cupon = val;
+    this.type_segment = val;
     this.COURSE_SELECTED = [];
     this.CATEGORIE_SELECTED = [];
     this.course_id = '';
@@ -214,8 +212,6 @@ export class CuponeEditComponent {
       this.COURSE_SELECTED.splice(COURSE_INDEX, 1);
     }
   }
-
-
   deleteCategorie(CATEGORIE_SELEC: any) {
     let CATEGORIE_INDEX = this.CATEGORIE_SELECTED.findIndex((item: any) => item._id === CATEGORIE_SELEC._id);
     if (CATEGORIE_INDEX != -1) {
@@ -223,4 +219,4 @@ export class CuponeEditComponent {
     }
   }
 
-}  
+}

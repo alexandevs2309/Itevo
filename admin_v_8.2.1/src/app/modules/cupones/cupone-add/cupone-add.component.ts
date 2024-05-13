@@ -43,7 +43,74 @@ ngOnInit(): void {
 
   })
 }
-save(){}
+save(){
+  if( !this.code || !this.discount){
+    this.toaster.error('TODOS LOS CAMPOS DEBEN SER COMPLETADOS');
+    return;
+  }
+
+  if (this.type_count == 2 && this.num_use == 0) {
+    this.toaster.error('NESECITAS LLENAR UN NUMERO DE USO LIMITE ');
+    return; 
+   }
+  
+  if (this.type_cupon == 1 && this.COURSE_SELECTED.length == 0) {
+    this.toaster.error('NESECITAS SELECIONAR UN CURSO ');
+    return; 
+  }
+
+  if (this.type_cupon == 2 && this.CATEGORIE_SELECTED.length == 0) {
+    this.toaster.error('NESECITAS SELECIONAR UNA CATEGORIA ');
+    return; 
+  }
+
+  let courses_selected:any = [];
+  let categorie_selected:any = [];
+
+  this.COURSE_SELECTED.forEach((element:any) => {
+    courses_selected.push({
+      _id: element._id,
+
+    })
+  });
+
+  this.CATEGORIE_SELECTED.forEach((element:any) => {
+    categorie_selected.push({
+      _id: element._id,
+    })
+  })
+
+  let data = {
+    code: this.code,
+    discount: this.discount,
+    type_discount: this.type_discount,
+    type_count: this.type_count,
+    num_use: this.num_use,
+    type_cupon: this.type_cupon,
+    courses: courses_selected,
+    categories: categorie_selected
+  }
+
+this.cuponeService.registerCupone(data).subscribe((resp:any) =>{
+    console.log(resp)
+    if(resp.message == 403 ){
+      this.toaster.error( resp.message_text ,'Error');
+    }else{
+      this.toaster.success('Cupón creado con éxito', 'Exito');
+      this.code = null;
+      this.discount =  0;
+      this.type_discount = 1;
+      this.type_count = 1;
+      this.num_use = 0;
+      this.type_cupon = 1;
+      this.COURSE_SELECTED = [];
+      this.CATEGORIE_SELECTED = [];
+
+    }
+  } )
+
+
+}  
 
 
 selectedTipeDiscount(val: number)
@@ -115,5 +182,7 @@ deleteCategorie(CATEGORIE_SELEC:any){
     this.CATEGORIE_SELECTED.splice(CATEGORIE_INDEX, 1);
   }
 }
+
+
 
 }

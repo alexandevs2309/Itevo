@@ -16,7 +16,7 @@ const routes: Routes = [
 
       },
       {
-        path: 'edicion/:id',
+        path: 'lista/edicion/:id',
         component:CuponeEditComponent
 
       },

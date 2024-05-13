@@ -46,13 +46,13 @@ const Routing: Routes = [
     path: 'apps/permissions',
     loadChildren: () => import('./permission/permission.module').then((m) => m.PermissionModule),
   },
-   
+
 
 
   // MODULOS PROPIOS
   {
     path: 'users',
-    loadChildren:() =>import('../modules/users/users.module').then((m) => m.UsersModule),
+    loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
   },
   {
     path: 'category',
@@ -63,9 +63,13 @@ const Routing: Routes = [
     path: 'courses', loadChildren: () => import('../modules/courses/courses.module').then((m) => m.CoursesModule),
   },
 
-  
+
   {
     path: 'cupon', loadChildren: () => import('../modules/cupones/cupones.module').then((m) => m.CuponesModule),
+  },
+
+  {
+    path: 'descuento', loadChildren: () => import('../modules/discount/discount.module').then((m) => m.DiscountModule),
   },
 
   {

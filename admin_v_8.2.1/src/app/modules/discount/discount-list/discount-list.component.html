@@ -12,21 +12,7 @@
                 <div class="card-title">
                     <!--begin::Search-->
                     <div class="d-flex align-items-center position-relative my-1">
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-                        <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none">
-                                <rect opacity="0.5" x="17.0365" y="15.1223" width="8.15546" height="2" rx="1"
-                                    transform="rotate(45 17.0365 15.1223)" fill="currentColor" />
-                                <path
-                                    d="M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z"
-                                    fill="currentColor" />
-                            </svg>
-                        </span>
-
-                        <input type="text" data-kt-user-table-filter="search" (keyup.enter)="listCupones()"
-                            [(ngModel)]="search" class="form-control form-control-solid w-250px ps-14"
-                            placeholder="Search Cupones" />
+                        
                     </div>
                 </div>
 
@@ -64,7 +50,7 @@
                                     <select class="form-select form-select-solid fw-bolder" data-kt-select2="true"
                                         data-placeholder="Select option" data-allow-clear="true"
                                         data-kt-user-table-filter="role" data-hide-search="true" [(ngModel)]="state"
-                                        (change)="listCupones()">
+                                        (change)="listDiscount()">
                                         <option value="">Todos</option>
                                         <option value="1">ACTIVO</option>
                                         <option value="2">INACTIVO</option>
@@ -80,7 +66,7 @@
 
 
                         <!--begin::Add user-->
-                        <a routerLink="/cupon/registro" class="btn btn-primary">
+                        <a routerLink="/descuento/registro" class="btn btn-primary">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                             <span class="svg-icon svg-icon-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -90,7 +76,7 @@
                                     <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
                                 </svg>
                             </span>
-                            <!--end::Svg Icon-->Add Cupon</a>
+                            <!--end::Svg Icon-->Add Discount</a>
                         <!--end::Add user-->
                     </div>
                     <!--end::Toolbar-->
@@ -375,10 +361,10 @@
                         <!--begin::Table head-->
                         <thead>
                             <tr class="fw-bolder text-muted bg-light">
-                                <th class="ps-4 min-w-325px rounded-start">Codigo</th>
+                                <th class="ps-4 min-w-325px rounded-start">Tipo de Campaña</th>
                                 <th class="min-w-125px">Tipo de Descuento</th>
-                                <th class="min-w-125px">Tipo de Uso</th>
-                                <th class="min-w-150px">Tipo de Cupon</th>
+                                <th class="min-w-125px"><span class="mx-2">fecha de Inicio </span> | <span class="mx-2">Fecha de Final</span>  </th>
+                                <th class="min-w-150px">Tipo de segmento</th>
                                 <th class="min-w-150px">Status</th>
                                 <th class="min-w-200px text-end rounded-end"></th>
                             </tr>
@@ -386,46 +372,47 @@
                         <!--end::Table head-->
                         <!--begin::Table body-->
                         <tbody>
-                            <ng-container *ngFor="let CUPONE of CUPONES">
+                            <ng-container *ngFor="let DISCOUNT of DISCOUNTS">
                                 <tr>
                                     <td>
                                         <a href="#"
-                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{CUPONE.code}}
-                                            USD </a>
+                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{getTypeCampaign(DISCOUNT.type_campaign)}}
+                                         </a>
                                     </td>
 
                                     <td>
                                         <a href="#"
-                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{CUPONE.type_discount
+                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{DISCOUNT.type_discount
                                             === 1 ? 'PORSENTAGE' : 'MONTO FIJO'}}
                                         </a>
-                                        <span class="text-muted fw-bold text-muted d-block fs-7">{{CUPONE.discount }}
-                                            {{CUPONE.type_discount === 1 ? '%': 'USD' }} </span>
+                                        <span class="text-muted fw-bold text-muted d-block fs-7">{{DISCOUNT.discount }}
+                                            {{DISCOUNT.type_discount === 1 ? '%': 'USD' }} </span>
                                     </td>
+
                                     <td>
-                                        <a href="#"
-                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{CUPONE.type_count
-                                            === 1 ? 'ILIMITADO': 'LIMITADO'}}</a>
-                                        <span class="text-muted fw-bold text-muted d-block fs-7"
-                                            *ngIf="CUPONE.type_count === 2 ">{{CUPONE.num_use}}</span>
+                                        <a href="#" class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6 text-center">
+                                            {{ getParseDate(DISCOUNT.start_date) + '   |   ' + getParseDate(DISCOUNT.end_date) }}
+                                          </a>
+                                          
+                                        <!-- <span class="text-muted fw-bold text-muted d-block fs-7" *ngIf="DISCOUNT.type_count === 2 ">{{DISCOUNT.num_use}}</span> -->
                                     </td>
 
                                     <td>
                                         <a href="#"
-                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{CUPONE.type_cupon
+                                            class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6">{{DISCOUNT.type_segment
                                             === 1 ? 'CURSOS': 'CATEGORIAS'}}</a>
                                         <span
-                                            class="text-muted fw-bold text-muted d-block fs-7">{{CUPONE.profession}}</span>
+                                            class="text-muted fw-bold text-muted d-block fs-7">{{DISCOUNT.profession}}</span>
                                     </td>
                                     <td>
-                                        <span class="badge badge-light-primary fs-7 fw-bold" *ngIf="CUPONE.state === 1">ACTIVO</span>
-                                        <span class="badge badge-light-warning fs-7 fw-bold "*ngIf="CUPONE.state === 2"> INACTIVO </span>
+                                        <span class="badge badge-light-primary fs-7 fw-bold" *ngIf="DISCOUNT.state === 1">ACTIVO</span>
+                                        <span class="badge badge-light-warning fs-7 fw-bold "*ngIf="DISCOUNT.state === 2"> INACTIVO </span>
 
                                     </td>
                                     <td class="text-end">
 
                                         <a href="#" onclick="return false"
-                                            [routerLink]="['/cupon/lista/edicion/', CUPONE._id]"
+                                            [routerLink]="['/descuento/lista/editar/', DISCOUNT._id]"
                                             class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                             <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                                             <span class="svg-icon svg-icon-3">
@@ -442,7 +429,7 @@
                                             <!--end::Svg Icon-->
                                         </a>
 
-                                        <a href="#" onclick="return false;" (click)="deleteCupon(CUPONE)"
+                                        <a href="#" onclick="return false;" (click)="deleteDiscount(DISCOUNT)"
                                             class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                             <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                                             <span class="svg-icon svg-icon-3">
