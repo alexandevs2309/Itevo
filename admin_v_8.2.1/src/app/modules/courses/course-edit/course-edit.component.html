@@ -180,10 +180,10 @@
                     <select class="form-control form-select-solid fw-bolder" name="instructor" [(ngModel)]="user"
                         placeholder="Selec. Instructor">
 
-                        <option value="">Seleciona Instructor
-                        <option>
-                            <ng-container *ngFor="let USER of USERS">
-                        <option [value]="USER._id"> {{USER.name + ' ' + USER.surname}} </option>
+                        <option value="">Seleciona Instructor </option>
+
+                        <ng-container *ngFor="let USER of USERS">
+                            <option [value]="USER._id"> {{USER.name + ' ' + USER.surname}} </option>
                         </ng-container>
 
                     </select>
